@@ -1,0 +1,48 @@
+[
+    {
+        "id": "1",
+        "main_category": "",
+        "name": "Bluz",
+        "tag": "bluz"
+    },
+    {
+        "id": "2",
+        "name": "Gömlek",
+        "tag": "gomlek"
+    },
+    {
+        "id": "3",
+        "name": "Sweatshirt",
+        "tag": "sweatshirt"
+    },
+    {
+        "id": "4",
+        "name": "Tshirt",
+        "tag": "t-shirt"
+    },
+    {
+        "id": "5",
+        "name": "Takım",
+        "tag": "takim"
+    },
+    {
+        "id": "6",
+        "name": "Kazaklar/Triko",
+        "tag": "kazaklar-triko"
+    },
+    {
+        "id": "7",
+        "name": "Hırka",
+        "tag": "hirka"
+    },
+    {
+        "id": "8",
+        "name": "Atlet",
+        "tag": "atlet"
+    },
+    {
+        "id": "9",
+        "name": "Crop",
+        "tag": "crop"
+    }
+]

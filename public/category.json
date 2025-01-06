@@ -1,0 +1,108 @@
+[
+    {
+        "name": "Tüm Ürünler",
+        "url": "tum-urunler"
+    },
+    {
+        "name": "En Yeniler",
+        "url": "en-yeniler"
+    },
+    {
+        "name": "Elbise",
+        "url": "elbise"
+    },
+    {
+        "name": "Üst Giyim",
+        "url": "ust-giyim",
+        "subCategory": [
+            {
+                "name": "Bluz",
+                "url": "bluz"
+            },
+            {
+                "name": "Gömlek",
+                "url": "gomlek"
+            },
+            {
+                "name": "Sweatshirt",
+                "url": "sweatshirt"
+            },
+            {
+                "name": "Tshirt",
+                "url": "t-shirt"
+            },
+            {
+                "name": "Takım",
+                "url": "takim"
+            },
+            {
+                "name": "Kazaklar/Triko",
+                "url": "kazaklar-triko"
+            },
+            {
+                "name": "Hırka",
+                "url": "hirka"
+            },
+            {
+                "name": "Atlet",
+                "url": "Crop"
+            }
+        ]
+    },
+    {
+        "name": "Alt Giyim",
+        "url": "alt-giyim",
+        "subCategory": [
+            {
+                "name": "Pantolon",
+                "url": "pantolon"
+            },
+            {
+                "name": "Tayt",
+                "url": "tayt"
+            },
+            {
+                "name": "Tulum",
+                "url": "tulum"
+            },
+            {
+                "name": "Jean",
+                "url": "jean"
+            },
+            {
+                "name": "Etek",
+                "url": "etek"
+            },
+            {
+                "name": "Şort",
+                "url": "sort"
+            }
+        ]
+    },
+    {
+        "name": "Dış Giyim",
+        "url": "dis-giyim",
+        "subCategory": [
+            {
+                "name": "Ceket",
+                "url": "ceket"
+            },
+            {
+                "name": "Yelek",
+                "url": "yelek"
+            },
+            {
+                "name": "Kaban",
+                "url": "kaban"
+            },
+            {
+                "name": "Mont",
+                "url": "mont"
+            },
+            {
+                "name": "Kimono",
+                "url": "kimono"
+            }
+        ]
+    }
+]

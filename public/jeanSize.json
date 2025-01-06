@@ -1,0 +1,610 @@
+[
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "32"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "34"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "36"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "38"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "40"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "42"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "44"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "46"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "48"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "50"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "52"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "54"
+    },
+    {
+        "name": "Beyaz",
+        "tag": "white",
+        "size": "56"
+    },
+
+
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "32"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "34"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "36"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "38"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "40"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "42"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "44"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "46"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "48"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "50"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "52"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "54"
+    },
+    {
+        "name": "Siyah",
+        "tag": "black",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "32"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "34"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "36"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "38"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "40"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "42"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "44"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "46"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "48"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "50"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "52"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "54"
+    },
+    {
+        "name": "Mavi",
+        "tag": "blue",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "32"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "34"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "36"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "38"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "40"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "42"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "44"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "46"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "48"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "50"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "52"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "54"
+    },
+    {
+        "name": "Kırmızı",
+        "tag": "red",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "32"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "34"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "36"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "38"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "40"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "42"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "44"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "46"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "48"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "50"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "52"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "54"
+    },
+    {
+        "name": "Sarı",
+        "tag": "yellow",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "32"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "34"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "36"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "38"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "40"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "42"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "44"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "46"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "48"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "50"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "52"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "54"
+    },
+    {
+        "name": "Pembe",
+        "tag": "pink",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Kahverengi",
+        "tag": "stone",
+        "size": "32"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "34"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "36"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "38"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "40"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "42"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "44"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "46"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "48"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "50"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "52"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "54"
+    },
+    {
+        "name": "Kahverengi",
+        "tag": "pink",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Yeşil",
+        "tag": "stone",
+        "size": "32"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "34"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "36"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "38"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "40"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "42"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "44"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "46"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "48"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "50"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "52"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "54"
+    },
+    {
+        "name": "Yeşil",
+        "tag": "pink",
+        "size": "56"
+    },
+
+
+
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "32"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "34"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "36"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "38"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "40"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "42"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "44"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "46"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "48"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "50"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "52"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "54"
+    },
+    {
+        "name": "Gri",
+        "tag": "slate",
+        "size": "56"
+    }
+]

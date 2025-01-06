@@ -1,0 +1,128 @@
+[
+    {
+        "id": "1",
+        "name": "Üst Giyim",
+        "tag": "ustGiyim",
+        "subCategories": [
+            {
+                "id": "1",
+                "name": "Bluz",
+                "tag": "bluz"
+            },
+            {
+                "id": "2",
+                "name": "Gömlek",
+                "tag": "gomlek"
+            },
+            {
+                "id": "3",
+                "name": "Sweatshirt",
+                "tag": "sweatshirt"
+            },
+            {
+                "id": "4",
+                "name": "Tshirt",
+                "tag": "tshirt"
+            },
+            {
+                "id": "5",
+                "name": "Takım",
+                "tag": "takim"
+            },
+            {
+                "id": "6",
+                "name": "Kazaklar/Triko",
+                "tag": "kazaklarTriko"
+            },
+            {
+                "id": "7",
+                "name": "Hırka",
+                "tag": "hirka"
+            },
+            {
+                "id": "8",
+                "name": "Atlet",
+                "tag": "atlet"
+            },
+            {
+                "id": "9",
+                "name": "Crop",
+                "tag": "crop"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Elbise",
+        "tag": "elbise"
+    },
+    {
+        "id": "2",
+        "name": "Alt Giyim",
+        "tag": "altGiyim",
+        "subCategories": [
+            {
+                "id": "1",
+                "name": "Pantolon",
+                "tag": "pantolon"
+            },
+            {
+                "id": "2",
+                "name": "Tayt",
+                "tag": "tayt"
+            },
+            {
+                "id": "3",
+                "name": "Tulum",
+                "tag": "tulum"
+            },
+            {
+                "id": "4",
+                "name": "Jean",
+                "tag": "jean"
+            },
+            {
+                "id": "5",
+                "name": "Etek",
+                "tag": "etek"
+            },
+            {
+                "id": "6",
+                "name": "Şort",
+                "tag": "sort"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Dış Giyim",
+        "tag": "disGiyim",
+        "subCategories": [
+            {
+                "id": "1",
+                "name": "Ceket",
+                "tag": "ceket"
+            },
+            {
+                "id": "2",
+                "name": "Yelek",
+                "tag": "yelek"
+            },
+            {
+                "id": "3",
+                "name": "Kaban",
+                "tag": "kaban"
+            },
+            {
+                "id": "4",
+                "name": "Mont",
+                "tag": "mont"
+            },
+            {
+                "id": "5",
+                "name": "Kimono",
+                "tag": "kimono"
+            }
+        ]
+    }
+]

@@ -177,13 +177,24 @@ export default function ProductPage() {
           }`}</span>{" "}
         </p>
         <div className="flex flex-row gap-x-2 flex-wrap items-center">
-          {detailProduct?.stoks.map((item, index) => (
-            <button
-              onClick={()=> setStateProduct({...stateProduct,size:item.size})}
-              key={index} className={`${stateProduct.size === item.size && 'bg-black text-white'} text-sm w-10 h-10 flex items-center justify-center border px-2.5 rounded-full`}>
-              {item.size.startsWith('s') ? item.size.slice(1): item.size}
-            </button>
-          ))}
+        {
+    // Beden listesini benzersiz kılmak için Set kullanımı
+    [...new Set(detailProduct?.stoks.map(item => item.size))].length === 1 && detailProduct?.stoks[0].size === 'Standart' ? (
+      <button onClick={()=> setStateProduct({...stateProduct,size:'Standart'})} className={`${stateProduct.size === 'Standart' && 'bg-black text-white'} border text-sm rounded-full p-2`}>
+        Standart
+      </button>
+    ) : (
+      [...new Set(detailProduct?.stoks.map(item => item.size))].map((size, index) => (
+        <button
+          onClick={() => setStateProduct({ ...stateProduct, size })}
+          key={index}
+          className={`${stateProduct.size === size && 'bg-black text-white'} text-sm w-10 h-10 flex items-center justify-center border px-2.5 rounded-full`}
+        >
+          {size.startsWith('s') ? size.slice(1) : size}
+        </button>
+      ))
+    )
+  }
         </div>
 
         <p className="mt-2">Adet</p>
@@ -237,8 +248,10 @@ export default function ProductPage() {
           className="border w-full py-2 hover:bg-black hover:text-white transition-all"
         >
           Sepete Ekle
-        </button> 
+        </button>
+        <div className="text-[13px] text-gray-600">
         <BlocksRenderer content={detailProduct?.aciklama as []} />
+        </div>
       </div>
       <Modal
         isOpen={isModalOpen}

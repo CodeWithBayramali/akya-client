@@ -14,6 +14,7 @@ export type Product = {
 
 export type Category = {
   categoryName: string;
+  slug: string;
   alt_kategoris: {subCategoryName:string; slug:string}[]
 }
 

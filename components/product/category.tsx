@@ -33,16 +33,23 @@ export default function Category() {
       <div className="sm:hidden md:sticky top-24 md:flex flex-col w-44">
         {
           cat?.map((item,index)=> (
-            <ul key={index} className="flex md:flex-col sm:flex-row gap-y-2 text-gray-500">
-         
+            <ul key={index} className="flex md:flex-col sm:flex-row gap-y-2">
           <li>
             <button
-              className={`text-blue-600 text-sm flex flex-row gap-x-4 items-center justify-between font-semibold`}
+              onClick={()=> {
+                getProductsByCategory(item.slug)
+                    dispatch(getProductDispatch(item.slug))
+              }}
+              disabled={item.slug !== 'elbise'}
+              className={`${
+                item.slug === selectedCategory && item.slug === 'elbise'
+                  && "text-blue-600"
+              }text-sm flex flex-row gap-x-4 items-center justify-between`}
             >
               <p>{item?.categoryName}</p>
               <MdKeyboardArrowDown />
             </button>
-            <ul className="flex flex-col text-xs ml-2 gap-y-2 my-2">
+            <ul className="flex flex-col text-sm ml-2 gap-y-2 my-2">
               {item?.alt_kategoris?.map((item, index) => (
                 <li
                   key={index}

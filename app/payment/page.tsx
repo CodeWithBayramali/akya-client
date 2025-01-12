@@ -6,17 +6,26 @@ import { RootState } from "../../redux/store";
 import PaymentForm from "../../components/payment-form";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { getRequest } from "@/service/requestService";
 
 export default function PaymentPage() {
   const navigation = useRouter()
   const {cartProducts,total} = useSelector((state:RootState) => state.cart)
   const [isClient, setIsClient] = useState(false);
+  const [shippingPrice,setShippingPrice] = useState(0)
 
   useEffect(() => {
     setIsClient(true);
     if(cartProducts.length === 0) {
       navigation.back()
     }
+
+    getRequest({
+           controller: "siparis-ayarlaris",
+           fields: ['kargo_fiyat']
+         }).then((res) => {
+             setShippingPrice(res.data[0].kargo_fiyat);
+           })
   }, [cartProducts]);
 
   if (!isClient) {
@@ -35,11 +44,11 @@ export default function PaymentPage() {
       <div className="container mx-auto flex sm:flex-col-reverse md:flex-row w-full">
         {/* Sol taraftaki içerik */}
         <div className="md:w-1/2 sm:w-full">
-          <PaymentForm />
+          <PaymentForm shippingPrice={shippingPrice} />
         </div>
 
         {/* Sağ taraftaki içerik */}
-        <div className="md:w-1/2 sm:w-full">
+        <div className="md:w-1/2 sm:w-full relative">
           {
             cartProducts.map((item, index) => (
               <div key={index} className="flex flex-row items-center p-6 w-full">
@@ -73,15 +82,15 @@ export default function PaymentPage() {
           }
           <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
             <p>Alt Toplam • {cartProducts.reduce((total,item)=> { return total + item.quantity;},0)} Ürün</p>
-            <p>₺ {total}</p>
+            <p className="font-semibold text-lg">₺ {total.toFixed(2)}</p>
           </div>
           <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
             <p>Kargo</p>
-            <p>₺ {process.env.NEXT_PUBLIC_SHIP_PRICE}</p>
+            <p className="font-semibold text-lg">₺ {shippingPrice.toFixed(2)}</p>
           </div>
           <div className="flex flex-row justify-between items-center p-4 text-2xl font-semibold w-full">
             <p>Toplam</p>
-            <p>₺ {total + parseInt(process.env.NEXT_PUBLIC_SHIP_PRICE || '0')}</p>
+            <p>₺ {(total + shippingPrice).toFixed(2)}</p>
           </div>
         </div>
       </div>

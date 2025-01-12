@@ -4,7 +4,7 @@ export type Product = {
   name: string;
   slug: string;
   price: number;
-  stoks: {color:string; size:string; stock:number; colorName:string;}[];
+  stoks: {color_hex:string; size:string; stock:number; colorName:string;}[];
   kategori: string;
   alt_kategori: string;
   sex: string;
@@ -23,7 +23,7 @@ export type DetailProduct = {
   name: string;
   slug: string;
   price: number;
-  stoks: {color:string; size:string; stock:number; colorName:string;}[];
+  stoks: {color_hex:string; size:string; stock:number; colorName:string;}[];
   kategori: string;
   alt_kategori: string;
   sex: string;

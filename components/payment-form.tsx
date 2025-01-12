@@ -16,7 +16,7 @@ import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
 import Image from "next/image";
 
-export default function PaymentForm() {
+export default function PaymentForm({shippingPrice}: {shippingPrice: number}) {
   const { cartProducts, total } = useSelector((state: RootState) => state.cart);
   const [states, setStates] = useState<
     { id: string; il_id: string; name: string }[]
@@ -43,8 +43,6 @@ export default function PaymentForm() {
     }))
     setBasketItems(prevState=> [...prevState,...basketItems])
   },[])
-
-  console.log(cartProducts)
 
   return (
     <div className="flex flex-col gap-y-6 pr-6 py-6">
@@ -451,7 +449,7 @@ export default function PaymentForm() {
                 type="submit"
                 className="bg-blue-500 font-bold text-white rounded-lg py-3"
               >
-                ÖDEME YAP - {total} TL
+                ÖDEME YAP - {(total + shippingPrice).toFixed(2)} TL
               </button>
             </div>
           </Form>

@@ -5,13 +5,13 @@ import MobileMenuCategory from "./mobile-menu-category";
 import { useDispatch } from "react-redux";
 import { FaAngleLeft } from "react-icons/fa";
 import { AppDispatch } from "../../redux/store";
-import { getProductDispatch } from "../../redux/productSlice";
+import { getAllProductsDispatch, getProductDispatch } from "../../redux/productSlice";
 import { getRequest } from "../../service/requestService";
 import type { Category } from "../../types";
 
 export default function Category() {
   const dispatch = useDispatch<AppDispatch>();
-  const [selectedCategory, setSelectedCategory] = useState("en-yeniler");
+  const [selectedCategory, setSelectedCategory] = useState("all-product");
   const [cat,setCat] = useState<Category[]>([]);
 
   const getProductsByCategory = (categoryName: string) => {
@@ -31,6 +31,14 @@ export default function Category() {
     <>
       <MobileMenuCategory cat={cat} />
       <div className="sm:hidden md:sticky top-24 md:flex flex-col w-44">
+        <div className="flex mb-4">
+        <button 
+          onClick={()=> {
+            dispatch(getAllProductsDispatch(0,12))
+            setSelectedCategory('all-product')
+          }}
+          className={`${selectedCategory === 'all-product' ? 'text-blue-600': ''}`}>Tüm Ürünler</button>
+        </div>
         {
           cat?.map((item,index)=> (
             <ul key={index} className="flex md:flex-col sm:flex-row gap-y-2">
@@ -47,7 +55,9 @@ export default function Category() {
               }text-sm flex flex-row gap-x-4 items-center justify-between`}
             >
               <p>{item?.categoryName}</p>
-              <MdKeyboardArrowDown />
+              {
+                item.slug !== 'elbise' ? <MdKeyboardArrowDown /> : null
+              }
             </button>
             <ul className="flex flex-col text-sm ml-2 gap-y-2 my-2">
               {item?.alt_kategoris?.map((item, index) => (

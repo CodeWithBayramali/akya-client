@@ -44,7 +44,7 @@ export default function Footer() {
           <li className="hover:text-blue-600"><Link href='/iptal-iade-politikasi'>İptal ve İade Politikası</Link></li>
           <li className="hover:text-blue-600"><Link href='/mesafeli-satis-sozlesmesi'>Mesafeli Satış Sözleşmesi</Link></li>
           <li className="hover:text-blue-600"><Link href='/kvkk'>KVKK</Link></li>
-          <li><Image src='/images/logo_band_colored@1X.png' alt="logo_band_colored@1X.png" width={500} height={500} layout="responsive" /></li>
+          <li><Image src='/images/logo_band_colored@1X.png' alt="logo_band_colored@1X.png" width={250} height={250} /></li>
         </ul>
         
       </div>

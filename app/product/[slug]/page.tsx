@@ -1,4 +1,6 @@
+// @ts-nocheck
 "use client";
+import 'react-image-lightbox/style.css';
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -6,8 +8,7 @@ import { AppDispatch } from "../../../redux/store";
 import { DetailProduct } from "../../../types";
 import { addProduct } from "../../../redux/cartSlice";
 import Loading from "../../../components/common/Loading";
-import Modal from "react-modal";
-import { TfiClose } from "react-icons/tfi";
+import Lightbox from 'react-image-lightbox'
 
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
@@ -39,18 +40,9 @@ export default function ProductPage() {
   const [errorState, setErrorState] = useState({ color: false, size: false });
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState("");
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   // Seçilen bedene göre renkleri filtreleme
-
-  const openModal = (image: string) => {
-    setCurrentImage(image);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     getRequest({
@@ -96,7 +88,9 @@ export default function ProductPage() {
         {/* Thumbnail Slider Sol Tarafta */}
         <div className="md:w-1/3 md:block sm:hidden">
           <Swiper
-            onSwiper={(swiper) => setThumbsSwiper(swiper)}
+            onSwiper={(swiper) => {
+              setThumbsSwiper(swiper)
+            }}
             direction="vertical" // Dikey sıralama
             spaceBetween={40}
             slidesPerView={4}
@@ -130,9 +124,7 @@ export default function ProductPage() {
             {detailProduct?.images.map((item, index) => (
               <SwiperSlide key={index}>
                 <img
-                  onClick={() =>
-                    openModal(`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.url}`)
-                  }
+                  onClick={()=> setIsModalOpen(!isModalOpen)}
                   src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.url}`}
                   className="w-full md:h-[48rem] sm:h-[35rem] object-cover"
                   alt="Product Image"
@@ -156,22 +148,22 @@ export default function ProductPage() {
           sayfasında hesaplanır.
         </p>
         <p>
-          Renk:{" "}
+          Renk Seçiniz:{" "}
           <span className="font-bold ml-2">{`${
             stateProduct.colorTagName && `- ${stateProduct.colorTagName}`
           }`}</span>{" "}
         </p>
         <div className="flex flex-row gap-x-4">
-          {detailProduct?.stoks.map((item, index) => (
-            <button
-              onClick={()=> setStateProduct({...stateProduct,color:item.color,colorTagName:item.colorName})}
-              key={index}
-              style={{ background: item.color }}
-              className={`${stateProduct.colorTagName === item.colorName && 'border-4'} w-6 h-6 rounded-full border border-gray-400`}
-            />
-          ))}
+        {[...new Map(detailProduct?.stoks.map(item => [item.color_hex, item])).values()].map((item, index) => (
+    <button
+      onClick={() => setStateProduct({...stateProduct, color: item.color_hex, colorTagName: item.colorName})}
+      key={index}
+      style={{ background: item.color_hex }}
+      className={`${stateProduct.colorTagName === item.colorName && 'border-4'} w-6 h-6 rounded-full border border-gray-400`}
+    />
+  ))}
         </div>
-        <p className="mt-2">Beden: 
+        <p className="mt-2">Beden Seçiniz: 
         <span className="font-bold ml-2">{`${
             stateProduct.size && `- ${stateProduct.size.startsWith('s') ? stateProduct.size.slice(1): stateProduct.size}`
           }`}</span>{" "}
@@ -186,7 +178,7 @@ export default function ProductPage() {
     ) : (
       [...new Set(detailProduct?.stoks.map(item => item.size))].map((size, index) => (
         <button
-          onClick={() => setStateProduct({ ...stateProduct, size })}
+          onClick={() => setStateProduct({ ...stateProduct, size: size, count:1 })}
           key={index}
           className={`${stateProduct.size === size && 'bg-black text-white'} text-sm w-10 h-10 flex items-center justify-center border px-2.5 rounded-full`}
         >
@@ -221,7 +213,7 @@ export default function ProductPage() {
             className={`${
               stateProduct.count >=
               (detailProduct?.stoks.find(
-                (item) => item.colorName === stateProduct.colorTagName
+                (item) => item.colorName === stateProduct.colorTagName && item.size === stateProduct.size
               )?.stock || 0)
                 ? "text-gray-300 cursor-not-allowed"
                 : "cursor-pointer"
@@ -229,7 +221,7 @@ export default function ProductPage() {
             onClick={() => {
               const stockLimit =
                 detailProduct?.stoks.find(
-                  (item) => item.colorName === stateProduct.colorTagName
+                  (item) => item.colorName === stateProduct.colorTagName && item.size === stateProduct.size
                 )?.stock || 0;
 
               if (stateProduct.count < stockLimit) {
@@ -253,29 +245,19 @@ export default function ProductPage() {
         <BlocksRenderer content={detailProduct?.aciklama as []} />
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Image Modal"
-        className="fixed inset-0 mx-4 flex items-center justify-center z-50" // Modal içeriği
-        overlayClassName="fixed inset-0 bg-black bg-opacity-75 z-40 flex items-center justify-center" //
-        shouldCloseOnOverlayClick={true} // Dış tıklama ile kapanmayı aktif eder
-        shouldCloseOnEsc={true} // Escape tuşuyla kapanmayı aktif eder
-      >
-        <div className="relative">
-          <button
-            onClick={closeModal}
-            className="absolute top-2 right-2 text-red-600 text-3xl"
-          >
-            <TfiClose />
-          </button>
-          <img
-            src={currentImage}
-            alt="Büyütülmüş Görsel"
-            className="max-w-full max-h-full rounded-lg"
+      {isModalOpen && (
+          <Lightbox
+            mainSrc={`${process.env.NEXT_PUBLIC_IMAGE_URL}${detailProduct?.images[photoIndex].url}`}
+            nextSrc={`${process.env.NEXT_PUBLIC_IMAGE_URL}${detailProduct?.images[(photoIndex + 1) % detailProduct.images.length].url}`}
+            prevSrc={`${process.env.NEXT_PUBLIC_IMAGE_URL}${detailProduct?.images[(photoIndex + detailProduct.images.length - 1) % detailProduct.images.length]}`}
+            onCloseRequest={() => setIsModalOpen(!isModalOpen)}
+            onMovePrevRequest={() =>  setPhotoIndex((photoIndex + detailProduct?.images.length - 1) % detailProduct?.images.length)
+            }
+            onMoveNextRequest={() =>
+              setPhotoIndex( (photoIndex + 1) % detailProduct?.images.length)
+            }
           />
-        </div>
-      </Modal>
+        )}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function Page() {
 
   return (
     <div className="container flex sm:flex-col md:flex-row my-28">
-      <div className="md:min-h-screen">
+      <div className="md:min-h-[60vh]">
       <Category />
       </div>
       <div className="flex-1">

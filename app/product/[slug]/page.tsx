@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import 'react-image-lightbox/style.css';
 import React, { useEffect, useState } from "react";
@@ -245,7 +244,7 @@ export default function ProductPage() {
         <BlocksRenderer content={detailProduct?.aciklama as []} />
         </div>
       </div>
-      {isModalOpen && (
+      {isModalOpen && detailProduct?.images?.length && (
           <Lightbox
             mainSrc={`${process.env.NEXT_PUBLIC_IMAGE_URL}${detailProduct?.images[photoIndex].url}`}
             nextSrc={`${process.env.NEXT_PUBLIC_IMAGE_URL}${detailProduct?.images[(photoIndex + 1) % detailProduct.images.length].url}`}

@@ -2,31 +2,23 @@
 import "../../app/globals.css";
 import React, {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "@/redux/store";
 import PaymentForm from "../../components/payment-form";
 import Image from "next/image";
+import {filterData} from "@/data/filterData";
 import { useRouter } from "next/navigation";
-import { getRequest } from "@/service/requestService";
 
 export default function PaymentPage() {
   const navigation = useRouter()
   const {cartProducts,total} = useSelector((state:RootState) => state.cart)
   const [isClient, setIsClient] = useState(false);
-  const [shippingPrice,setShippingPrice] = useState(0)
 
   useEffect(() => {
     setIsClient(true);
     if(cartProducts.length === 0) {
       navigation.back()
     }
-
-    getRequest({
-           controller: "siparis-ayarlaris",
-           fields: ['kargo_fiyat']
-         }).then((res) => {
-             setShippingPrice(res.data[0].kargo_fiyat);
-           })
-  }, [cartProducts]);
+  }, []);
 
   if (!isClient) {
     return null; // İlk başta SSR sırasında boş döndür
@@ -44,20 +36,20 @@ export default function PaymentPage() {
       <div className="container mx-auto flex sm:flex-col-reverse md:flex-row w-full">
         {/* Sol taraftaki içerik */}
         <div className="md:w-1/2 sm:w-full">
-          <PaymentForm shippingPrice={shippingPrice} />
+          <PaymentForm />
         </div>
 
         {/* Sağ taraftaki içerik */}
-        <div className="md:w-1/2 sm:w-full relative">
+        <div className="md:w-1/2 sm:w-full sm:mt-4 relative">
           {
             cartProducts.map((item, index) => (
-              <div key={index} className="flex flex-row items-center p-6 w-full">
+              <div key={index} className="flex flex-row items-center p-6 border shadow-md rounded-lg w-full">
                 <div className="relative h-16 w-12">
                   <Image
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{objectFit:"cover"}}
                     className="rounded-lg"
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.product.images[0]?.url}`}
+                    src={`${process.env.NEXT_PUBLIC_RESOURCE_API}${item.image}`}
                     alt="product.jpg"
                   />
                   <span className="bg-gray-700 text-white w-6 h-6 rounded-full absolute -top-3 -right-3 items-center 
@@ -67,9 +59,9 @@ export default function PaymentPage() {
                 </div>
                 <div className="flex flex-col w-full ml-6">
                   <div className="flex flex-row items-center justify-between w-full">
-                    <p className="text-sm font-semibold">{item.product.name}</p>
+                    <p className="text-sm font-semibold">{item.name}</p>
                     <p className="text-sm font-medium">
-                      ₺ {item.product.price * item.quantity}
+                      {(item.price * item.quantity).toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}
                     </p>
                   </div>
                   <div className="w-full">
@@ -82,15 +74,17 @@ export default function PaymentPage() {
           }
           <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
             <p>Alt Toplam • {cartProducts.reduce((total,item)=> { return total + item.quantity;},0)} Ürün</p>
-            <p className="font-semibold text-lg">₺ {total.toFixed(2)}</p>
+            <p className="font-semibold text-lg">{total.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}</p>
           </div>
           <div className="flex flex-row justify-between items-center p-4 text-sm font-medium w-full">
-            <p>Kargo</p>
-            <p className="font-semibold text-lg">₺ {shippingPrice.toFixed(2)}</p>
+            <p className={'text-lg'}>Kargo</p>
+            <p className={`${total >= filterData.maxShippingPrice ? 'text-green-600':'text-gray-600'} font-semibold text-lg`}>{
+              total >= filterData.maxShippingPrice ? 'Ücretsiz':
+                  filterData.shippingPrice.toLocaleString('tr-TR', {style: 'currency', currency:'TRY'}) }</p>
           </div>
           <div className="flex flex-row justify-between items-center p-4 text-2xl font-semibold w-full">
             <p>Toplam</p>
-            <p>₺ {(total + shippingPrice).toFixed(2)}</p>
+            <p>{(total >= filterData.maxShippingPrice ? total : (total+ filterData.shippingPrice)).toLocaleString('tr-TR', {style: 'currency', currency:'TRY'})}</p>
           </div>
         </div>
       </div>

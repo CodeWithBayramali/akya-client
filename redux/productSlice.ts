@@ -1,75 +1,120 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import { Product } from "../types";
-import { getRequest } from "../service/requestService";
+import { createSlice } from "@reduxjs/toolkit";
+import {Product} from "@/types";
+import {getGuardRequest} from "@/service/requestService";
 
-const initialState :{
-    products: Product[],
-    product: Product | null,
-    categoryProducts: Product[],
-    loading: boolean
-} = {
-    products: [],
-    product: null,
-    categoryProducts: [],
-    loading: true
+
+// Sepet Tipi
+export interface CartState {
+    products: Product[];
+    newSeasonProducts: Product[];
+    populateProducts: Product[];
+    filterProducts: Product[];
+    product: Product |null;
+    page: {}
+    loading: boolean;
 }
 
-const productSlice = createSlice({
-    name: 'product',
+const initialState: CartState = {
+    products: [],
+    newSeasonProducts: [],
+    populateProducts: [],
+    filterProducts: [],
+    page: {},
+    product: null,
+    loading: false
+}
+
+export const productSlice = createSlice({
+    name: "products",
     initialState,
     reducers: {
-        getProducts: (state,action) => {
-            state.products = action.payload
+        getNewSeasonProducts: (state,action) => {
+            state.newSeasonProducts = action.payload;
         },
-        getCategoryProducts: (state,action) => {
-            state.categoryProducts = action.payload
+        getPopulateProducts: (state,action) => {
+            state.populateProducts = action.payload;
         },
-        getProduct: (state,action) => {
-            state.product = action.payload
+        getProducts: (state, action) => {
+            state.products = action.payload._embedded?.productDtoes;
+            state.page = action.payload.page;
+        },
+        getProduct: (state, action) => {
+            state.product = action.payload;
+        },
+        getFilterProducts: (state, action) => {
+            state.filterProducts = action.payload._embedded?.productDtoes;
+            state.page = action.payload.page;
+        },
+        removeFilterProducts: (state) => {
+            state.filterProducts = [];
         },
         loading: (state,action) => {
-                state.loading = action.payload
+            state.loading = action.payload;
         }
-    }
-})
+    },
+});
 
-export const getAllProductsDispatch = (page:number,size:number) => async(dispatch:Dispatch) => {
-    await getRequest({
-        controller: 'ueruenlers',
-        pagination: {page: page, pageSize: size},
-        fields: ['name','slug','price'],
-        populate: ['images'],
-        sort: ['createdAt:desc']
-      }).then(res=> {
-        dispatch(getCategoryProducts(res.data))
-      }).finally(()=> {
+export const getNewSeasonProductsDispatch = (page: number, size: number) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'product',action: 'get-all-new-season',params: {page:page, size:size}}).then(res=> {
+        dispatch(getNewSeasonProducts(res.data))
         dispatch(loading(false))
-      })
-} 
-
-
-export const getProductDispatch = (slug:string) => async (dispatch: Dispatch) => {
-    if (slug === 'Elbise') {
-        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/ueruenlers?filters[kategori][slug][$eq]=${encodeURIComponent(slug)}`)
-          .then(async res => {
-            const response = await res.json();
-            dispatch(getCategoryProducts(response.data))
-          })
-          .finally(() => {
-            dispatch(loading(false))
-          });
-      } else {
-        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/ueruenlers?filters[alt_kategori][slug][$eq]=${encodeURIComponent(slug)}&populate=*`)
-          .then(async res => {
-            const response = await res.json();
-            dispatch(getCategoryProducts(response.data))
-          })
-          .finally(() => {
-            dispatch(loading(false))
-          });
-      }
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
 }
 
+export const getPopulateProductsDispatch = (page: number, size: number) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'product',action: 'get-all-populate',params: {page:page, size:size}}).then(res=> {
+        dispatch(getPopulateProducts(res.data))
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
 
-export const { getProducts, getProduct, getCategoryProducts, loading } = productSlice.actions
+export const getAllProductsDispatch = (page: number, size: number) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'product', action: 'products',params:{page:page, size:size}}).then(res=> {
+        dispatch(getProducts(res.data))
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+export const getProductBySlugDispatch = (slug: string) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'product',action: 'get-product',params: {slug: slug}}).then(res=> {
+        dispatch(getProduct(res.data))
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+export const filterProductDispatch = (params: object) => async(dispatch) => {
+    dispatch(loading(true))
+    getGuardRequest({controller:'product', action:'filter-product',params: {
+            subCategory: params.subCategory,
+            page: params.page,
+            pageSize: params.size }}).then(res=> {
+        dispatch(getFilterProducts(res.data))
+        dispatch(loading(false))
+    }).finally(()=> {
+        dispatch(loading(false))
+    })
+}
+
+// Reducer'ları dışa aktarma
+export const {
+    loading,
+    getProducts,
+    getNewSeasonProducts,
+    getProduct,
+    getFilterProducts,
+    getPopulateProducts,
+    removeFilterProducts} = productSlice.actions;
+
 export default productSlice.reducer;

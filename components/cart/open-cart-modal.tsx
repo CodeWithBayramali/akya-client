@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { CartProduct } from "../../types";
 import CartProductCard from "./cart-product-card";
 import { useRouter } from "next/navigation";
+import {filterData} from "@/data/filterData";
 
 interface OpenCartModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ export default function OpenCartModal({
   const {
     cartProducts,
     total,
-  }: { cartProducts: CartProduct[]; total: number } = useSelector(
+  }: { cartProducts, total: number } = useSelector(
     (state: RootState) => state.cart
   );
   const navigation = useRouter()
@@ -58,7 +58,7 @@ export default function OpenCartModal({
     >
       {/* Modal İçeriği */}
       <div
-        className={`w-80 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`w-[400px] h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen && !isClosing ? "translate-x-0" : "translate-x-full"
         } relative`}
       >
@@ -97,15 +97,18 @@ export default function OpenCartModal({
           )}
           
         </div>
-        <span className="text-xl fixed border-t w-full bottom-0">
+        <span className="text-xl flex flex-col justify-center items-center">
           <p className="py-6 px-4 font-semibold">Toplam: {total.toFixed(2)} ₺</p>
-          {
+          <small className={'text-blue-600 text-xs'}>- Fiyatlara KDV dahildir.</small>
+          <small className={'text-blue-600 text-xs'}>- {`${filterData.maxShippingPrice} ₺ ve üzeri alışverişlerde kargo ücretsizdir. `}</small>
+          <small className={'text-blue-600 text-xs'}>- Kargo fiyatı ödeme sayfasında hesaplanır.</small>{
             cartProducts.length !== 0 && (
-              <button onClick={goToPaymenyPage} className="bg-black p-4 font-bold flex justify-center text-white w-full">
-                Ödeme
-              </button>
+                <button onClick={goToPaymenyPage}
+                        className="bg-black p-3 mt-4 w-64 rounded-lg font-bold flex justify-center text-white">
+                  ÖDEMEYE SAYFASI
+                </button>
             )
-          }
+        }
         </span>
       </div>
     </div>

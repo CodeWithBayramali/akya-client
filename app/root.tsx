@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "../redux/store";
 import { SessionProvider } from "next-auth/react";
 import { PrimeReactProvider } from 'primereact/api'
+import {ToastContainer} from "react-toastify";
  
 export default function Root({ children }: { children: React.ReactNode }) {
   return (
@@ -17,6 +18,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
           {children}
           <BackToTop />
           <Footer />
+            <ToastContainer position={'top-center'} autoClose={1000} />
         </PrimeReactProvider>
       </Provider>
     </SessionProvider>

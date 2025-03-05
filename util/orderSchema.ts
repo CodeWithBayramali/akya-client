@@ -1,23 +1,51 @@
-import * as yup from 'yup'
+import * as yup from "yup";
 
-export const orderSchema = yup.object().shape({
-    paymentCard: yup.object({
-        cardHolderName: yup.string().required('Ad zorunlu alan !'),
-        cardNumber: yup.string().min(16,'Minimum 16 karakter !').required('Kart numarası zorunlu alan !'),
-        expireMonth: yup.string().min(2).max(2).required('Ay zorunlu alan !'),
-        expireYear: yup.string().min(2).max(2).required('Yıl zorunlu alan !'),
-        cvc: yup.string().min(3).max(3).required('CVC zorunlu alan !')
-    }),
-    buyer: yup.object({
-        name: yup.string().required('Ad zorunlu alan !'),
-        surname: yup.string().required('Soyad zorunlu alan !'),
-        gsmNumber: yup.string().required('Gsm numarası zorunlu alan !'),
-        email: yup.string().email('Lütfen mail formatında giriniz !').required('E-mail zorunlu alan !'),
-    }),
-    shippingAddress: yup.object({
-        city: yup.string().required('Şehir zorunlu alan !'),
-        state: yup.string().required('İlçe zorunlu alan !'),
-        address: yup.string().required('Detaylı adres zorunlu alan !'),
-        street: yup.string().required('Mahalle veya cadde zorunlu alan !'),
-    })
-})
+export const useOrderValidationSchema = (openBillingAddress) => {
+
+    return yup.object().shape({
+        paymentCard: yup.object().shape({
+            cardHolderName: yup
+                .string()
+                .required("Zorunlu Alan"),
+            cardNumber: yup
+                .string()
+                .required("Zorunlu Alan"),
+            expireMonth: yup
+                .string()
+                .required("Zorunlu Alan"),
+            expireYear: yup
+                .string()
+                .required("Zorunlu Alan"),
+            cvc: yup.string().required("Zorunlu Alan"),
+        }),
+        buyer: yup.object({
+            name: yup.string().required("Zorunlu Alan"),
+            surname: yup.string().required("Zorunlu Alan"),
+            gsmNumber: yup.string().required("Zorunlu Alan"),
+            email: yup
+                .string()
+                .email("Lütfen email formatında giriniz")
+                .required("Zorunlu Alan"),
+        }),
+        shippingAddress: yup.object({
+            city: yup.string().required("Zorunlu Alan"),
+            state: yup.string().required("Zorunlu Alan"),
+            address: yup.string().required("Zorunlu Alan"),
+            street: yup
+                .string()
+                .required("Zorunlu Alan"),
+        }),
+        ...(openBillingAddress
+            ? {
+                billingAddress: yup.object({
+                    city: yup.string().required("Zorunlu Alan"),
+                    state: yup.string().required("Zorunlu Alan"),
+                    address: yup.string().required("Zorunlu Alan"),
+                    street: yup
+                        .string()
+                        .required("Zorunlu Alan"),
+                }),
+            }
+            : {}),
+    });
+};

@@ -1,5 +1,9 @@
 "use client";
 import { Dancing_Script } from "next/font/google";
+import {useFormik} from "formik";
+import {postGuardRequest} from "@/service/requestService";
+import {toast} from "react-toastify";
+import * as yup from "yup";
 
 const dancing_script = Dancing_Script({
   subsets: ["latin"],
@@ -7,13 +11,30 @@ const dancing_script = Dancing_Script({
   display: "swap",
 });
 
+const contactFormSchema = yup.object().shape({
+  nameSurname: yup.string().required("Ad Soyad Zorunlu"),
+  email: yup.string().email("Lütfen mail formatında giriş yapınız").required("Ad Soyad Zorunlu"),
+  message: yup.string().min(50,"En az 50 karakter giriniz").required("Ad Soyad Zorunlu"),
+})
+
 export default function Contact() {
 
-
-  // const _handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   dispatch(createContactDispatch(inputState));
-  // };
+  const formik = useFormik({
+    initialValues: {
+      nameSurname: '',
+      email: '',
+      message: ''
+    },
+    onSubmit: (values, { resetForm }) => {
+      postGuardRequest({controller:'contact'},values).then((response) => {
+        toast.success(response.data.message);
+        resetForm()
+      }).catch((error) => {
+        toast.error('Beklenmedik bir hata oluştu lütfen daha sonra tekrar deneyiniz');
+      })
+    },
+    validationSchema: contactFormSchema
+  });
 
   return (
     <div>
@@ -31,53 +52,57 @@ export default function Contact() {
         <h1
           className={`${dancing_script.className} text-center mt-12 text-5xl`}
         >
-          Biz Sizi Arayalım
+          En Kısa Sürede Dönüş Yapacağız
         </h1>
 
-        {/* <form onSubmit={_handleSubmit} className="my-24">
-          <div className="flex md:flex-row sm:flex-col gap-x-4">
-            <span className="flex flex-col gap-y-2 w-full">
-              <label>Ad Soyad</label>
+         <form onSubmit={formik.handleSubmit} className="my-24">
+          <div className="flex flex-col gap-y-8">
+            <div className={'flex flex-row gap-x-4'}>
+              <span className="flex flex-col gap-y-2 w-full">
+              <label>Ad Soyad *</label>
               <input
-              required
-                value={inputState.nameSurname}
-                onChange={(e) =>
-                  setInputState({ ...inputState, nameSurname: e.target.value })
-                }
-                className="border p-2 rounded-lg w-full"
+                  required
+                  name={'nameSurname'}
+                  value={formik.values.nameSurname}
+                  onChange={formik.handleChange}
+                  className="border p-2 rounded-lg w-full"
               />
             </span>
 
-            <span className="flex flex-col gap-y-2 w-full">
-              <label>Mail</label>
+              <span className="flex flex-col gap-y-2 w-full relative">
+              <label>E-mail *</label>
               <input
-              required
-                value={inputState.email}
-                onChange={(e) =>
-                  setInputState({ ...inputState, email: e.target.value })
-                }
-                className="border p-2 rounded-lg w-full"
+                  required
+                  name={'email'}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  className="border p-2 rounded-lg w-full"
               />
-            </span>
+                {formik.errors.email && formik.touched.email &&
+                    <small className={'text-xs text-red-600'}>{formik.errors.email}</small>}
 
-            <span className="flex flex-col gap-y-2 w-full">
-              <label>Telefon</label>
-              <input
-              required
-                value={inputState.mobilePhoneNumber}
-                onChange={(e) =>
-                  setInputState({ ...inputState, mobilePhoneNumber: e.target.value })
-                }
-                className="border p-2 rounded-lg w-full"
+            </span>
+            </div>
+
+            <span className="flex flex-col gap-y-2 w-full relative">
+              <label>Mesaj *</label>
+              <textarea
+                  required
+                  name={'message'}
+                  value={formik.values.message}
+                  onChange={formik.handleChange}
+                  className="border p-2 rounded-lg w-full"
               />
+              {formik.errors.message && formik.touched.message &&
+                  <small className={'text-xs text-red-600'}>{formik.errors.message}</small>}
             </span>
           </div>
-          <div className="flex items-center justify-center">
-            <button className="bg-blue-500 p-2 rounded-lg text-white w-44 mt-12">
-              Gönder
-            </button>
-          </div>
-        </form> */}
+           <div className="flex items-center justify-center">
+             <button type={'submit'} className="bg-blue-500 p-2 rounded-lg text-white w-44 mt-12">
+               Gönder
+             </button>
+           </div>
+         </form>
       </div>
     </div>
   );

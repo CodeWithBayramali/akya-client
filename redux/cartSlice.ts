@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CartProduct, ColorSizeType } from "../types";
 
-const getInitialState = (): CartState => {
+// Ürün Tipi
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+  size: string;
+  color: string;
+}
+
+const getInitialState = () => {
   if (typeof window === "undefined") {
     // Eğer sunucu tarafında çalışıyorsa, sadece varsayılan initial state dönüyoruz
     return {
@@ -24,79 +34,58 @@ const getInitialState = (): CartState => {
   };
 };
 
-interface CartState {
-  cartProducts: CartProduct[];
-  total: number;
-}
-const initialState = getInitialState()
+const initialState = getInitialState();
 
-
-
-const cartSlice = createSlice({
-  name: "cart",
+export const cartSlice = createSlice({
+  name: "carts",
   initialState,
   reducers: {
-
-    addProduct: (state, action) => {
-      const {product,quantity, colorTagName,size} = action.payload
+    // Sepete ürün ekleme işlemi
+    addToCart: (state, action) => {
+      const { size, color, name, id, image, price, quantity } = action.payload;
       const existingProduct = state.cartProducts.find(
-        (p) => p.product.documentId === action.payload.product.documentId
+          (p) => p.id === id && p.color === color && p.size === size
       );
-        const stock = product.stoks.find(
-          (item:ColorSizeType)=> item.colorName === colorTagName && item.size === size)?.stock
       if (existingProduct) {
-        if(existingProduct.quantity >= stock) {
-          alert('Stok Adetini Aştınız !')
-          return;
-        }else {
-          state.total += existingProduct.product.price;
-          existingProduct.quantity += 1;
-        }
+        state.total = price * quantity;
+        existingProduct.quantity = quantity;
       } else {
         state.cartProducts.push(action.payload);
-        state.total += action.payload.product.price * action.payload.quantity;
+        state.total += price * action.payload.quantity;
       }
-      localStorage.setItem('cart',JSON.stringify({cartProducts:state.cartProducts,total:state.total}))
-    },
-
-
-
-    discountProduct: (state, action) => {
-      const existingProduct = state.cartProducts.find(
-        (p) => p.product.documentId === action.payload.product.documentId
+      localStorage.setItem(
+          "cart",
+          JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
       );
-      if (existingProduct && existingProduct.quantity !== undefined) {
-        existingProduct.quantity -= 1;
-        state.total -= action.payload.product.price;
-      }
-      localStorage.setItem('cart',JSON.stringify({cartProducts:state.cartProducts,total:state.total}))
     },
 
-
-
-    removeProduct: (state, action) => {
-      const {colorTagName, size} = action.payload
-      const productToRemove = state.cartProducts.find(
-        (p) => p.product.documentId === action.payload.product.documentId || p.colorTagName === colorTagName || p.size === size
-      )
-      if(productToRemove)
-        state.total -= productToRemove.product.price * productToRemove.quantity
-        state.cartProducts = state.cartProducts.filter(
-        (p) => p.product.documentId !== action.payload.product.documentId || p.colorTagName !== colorTagName || p.size !== size
-      )
-      localStorage.setItem('cart',JSON.stringify({cartProducts:state.cartProducts,total:state.total}))
+    //Sepetten ürün silme işlemi
+    removeFromCart: (state, action) => {
+      state.cartProducts = state.cartProducts.filter(
+          (item) =>
+              !(
+                  item.id === action.payload.id && item.color === action.payload.color && item.size === action.payload.size
+              )
+      );
+      state.total = state.cartProducts.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+      );
+      localStorage.setItem(
+          "cart",
+          JSON.stringify({ cartProducts: state.cartProducts, total: state.total })
+      );
     },
-
-
-
-    reset: (state, action) => {
+    clearCart: (state) => {
       state.cartProducts = [];
       state.total = 0;
-      localStorage.removeItem('cart')
+      localStorage.removeItem("cart");
+      // toast.warning(t("productDetail.productsClearedCart"));
     },
   },
 });
 
-export const { addProduct, reset, removeProduct, discountProduct } =
-  cartSlice.actions;
+// Reducer'ları dışa aktarma
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+
 export default cartSlice.reducer;

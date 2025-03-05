@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import "react-multi-carousel/lib/styles.css";
 import Root from "./root";
 import { Jost } from 'next/font/google';
 

@@ -1,25 +1,21 @@
 'use client'
 import ProductCard from "../../components/product-card";
 import Category from "../../components/product/category";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Product } from "../../types";
-import { AppDispatch, RootState } from "../../redux/store";
+import React, {useState} from "react";
+import { useSelector } from "react-redux";
+import { Product } from "@/types";
+import { RootState } from "@/redux/store";
 import Loading from "../../components/common/Loading";
-import { getAllProductsDispatch } from "../../redux/productSlice";
+import {Paginator} from "primereact/paginator";
 
 
 export default function Page() {
-  const { categoryProducts, loading } = useSelector((state:RootState)=> state.product)
-  const dispatch = useDispatch<AppDispatch>()
-  
-  const getAllProducts = () => {
-    dispatch(getAllProductsDispatch(0,12))
-  }
-  
-  useEffect(()=> {
-   getAllProducts()
-  },[])
+  const { filterProducts,products ,loading, page } = useSelector((state:RootState)=> state.product)
+    const [pageable, setPageable] = useState({currentPage:0,size:12})
+
+    const onPageChange = (event) => {
+        setPageable({ size: event.rows, currentPage: event.page });
+    };
 
   return (
     <div className="container flex sm:flex-col md:flex-row my-28">
@@ -29,15 +25,23 @@ export default function Page() {
       <div className="flex-1">
         {
           loading ? <Loading /> : (
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 flex-nowrap">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 flex-nowrap">
             {
-                categoryProducts?.map((item:Product,index:number)=> (
-                  <ProductCard key={parseInt(index.toFixed(2))} product={item} />
+                (filterProducts?.length > 0 ? filterProducts:products).map((item:Product,index:number)=> (
+                  <ProductCard key={index} product={item} />
                 ))
             }
           </div>
           )
         }
+          <Paginator
+              className={"my-12 "}
+              first={pageable.currentPage * pageable.size}
+              rows={pageable.size}
+              totalRecords={page.totalElements}
+              rowsPerPageOptions={[12, 20, 30]}
+              onPageChange={onPageChange}
+          />
       </div>
 
     </div>

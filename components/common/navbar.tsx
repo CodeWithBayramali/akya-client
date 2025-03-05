@@ -8,7 +8,7 @@ import { RiMenu4Fill } from "react-icons/ri";
 import { RiCloseLargeLine } from "react-icons/ri";
 import { Dancing_Script } from "next/font/google";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "@/redux/store";
 import { FaWhatsapp } from "react-icons/fa";
 
 const dancing_script = Dancing_Script({
@@ -58,8 +58,8 @@ export default function Navbar() {
       <nav
         className={`${
           mobile
-            ? "bg-white transition-all backdrop-blur-lg bg-opacity-70 rounded-b-3xl py-6 z-30 fixed top-0 w-full"
-            : "bg-transparent py-6 z-30 fixed top-0 w-full"
+            ? "bg-white transition-all backdrop-blur-lg bg-opacity-70 rounded-b-3xl py-4 z-50 fixed top-0 w-full"
+            : "bg-transparent py-4 z-50 fixed top-0 w-full"
         }`}
       >
         <div className="container flex flex-row items-center justify-between">
@@ -67,8 +67,8 @@ export default function Navbar() {
             <Link href="/">
               <Image
                 src="/images/akya-logo.png"
-                width={100}
-                height={100}
+                width={70}
+                height={70}
                 alt="akya_logo.png"
               />
             </Link>

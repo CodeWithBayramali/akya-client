@@ -1,126 +1,157 @@
+export type RequestOptions = {
+  id?: string;
+  controller: string;
+  lang?: string;
+  action?: string;
+  params?: object;
+};
+
+export interface ProductProps {
+  product: Product;
+  products: Product[];
+  categories: Category[];
+  colors: Color[];
+  contacts: Contact[]
+  orders: Order[];
+  blogs: Blog[]
+  loading: boolean;
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
+}
+
+export type Contact = {
+  id: string;
+  nameSurname: string;
+  email: string;
+  message: string;
+}
+
+export type Order = {
+  buyer: Buyer;
+  shippingAddress: ShippingAddress;
+  basketItems: OrderBasketItem[];
+  totalPrice: number;
+  status: string;
+  paymentId: string;
+}
+
+export type Buyer = {
+  name: string;
+  surname: string;
+  gsmNumber: string;
+  email: string;
+  ip: string;
+  identityNumber: string;
+}
+
+export type ShippingAddress = {
+  contactName: string;
+  city: string;
+  state: string;
+  country: string;
+  address: string;
+  street: string;
+  zipCode: string;
+}
+
+export type OrderBasketItem = {
+  name: string;
+  price: string;
+  quantity: number;
+  size: string;
+  color: string;
+  stockSizeId: string,
+  stockCode: string;
+}
+
+export type Color = {
+  name: string;
+};
 
 export type Product = {
-  documentId: string;
+  id: string;
   name: string;
   slug: string;
+  populate: boolean;
+  category: string;
+  newSeason: boolean;
+  purchasePrice: number;
+  subCategory: string;
+  description: string;
   price: number;
-  stoks: {color_hex:string; size:string; stock:number; colorName:string;}[];
-  kategori: string;
-  alt_kategori: string;
-  sex: string;
-  images: {url: string}[];
-  aciklama: Block[];
+  discountPrice: number;
+  colorSize: ColorSize[];
 };
 
 export type Category = {
-  categoryName: string;
-  slug: string;
-  alt_kategoris: {subCategoryName:string; slug:string}[]
-}
-
-export type DetailProduct = {
   id: string;
   name: string;
-  slug: string;
-  price: number;
-  stoks: {color_hex:string; size:string; stock:number; colorName:string;}[];
-  kategori: string;
-  alt_kategori: string;
-  sex: string;
-  images: {url: string}[];
-  aciklama: Block[];
+  subCategories: string[];
+  lang: string;
 };
-
-export type ProductFormDataType = {
-  name: string;
-  price: number;
-  stock: number;
-  sex: string;
-  description: string;
-  colorSize: ColorSizeType[];
-  mainCategory: string | undefined;
-  subCategory: string | undefined;
-};
-
-export type ValuesType = {
-    name: string;
-    price: string;
-    stock: number;
-    sex: string,
-    description: string;
-}
-
-export type ColorSizeType = {
-  size: string;
-  colorName: string;
-  stock: number;
-};
-
-export type Contact = {
-  nameSurname: string;
-  email: string;
-  mobilePhoneNumber: string;
-};
-
-export type CartProduct = {
-  product: Product;
-  quantity: number;
-  color: string;
-  colorTagName: string;
-  size: string;
-};
-
-export type OrderValuesType = {
-  nameSurname: string,
-  addressDetails: string,
-  apartment: string,
-  postalCode: string,
-  email: string,
-  phoneNumber: string
-}
 
 export type BasketItem = {
   id: string;
-  name: string,
-  category1: string,
-  category2: string,
-  price: number
-}
-
-export type OrderProduct = {
-  orderProducts: {
-    productId: string;
-    productName: string;
-    imageUrl: string;
-    color: string;
-    size: string;
-    quantity: number
-  }[];
-  totalPrice: number;
-  nameSurname: string;
-  address: {
-    city: string;
-    state: string;
-    apartment: string;
-    zipCode: string;
-    addressDetails: string
-  };
-  phoneNumber: string;
-  email: string;
-  status: string;
-  createdAt: string;
-  id: string;
-}
-
-export type Menu = {
-  title: string;
-  path: string;
+  name: string;
+  category1: string;
+  category2: string;
+  price: number;
+  quantity: number;
 };
 
-interface Block {
-  type: string;
-  children: {
-    text: string;
-    type: string;
-  }[];
+export type ColorSize = {
+  color: string;
+  stockCode: string;
+  stockSize: { id: string; size: string; stock: number }[];
+  images: string[];
+};
+
+export type Blog = {
+  title: string;
+  category: string;
+  image: string,
+  content: string;
+  createdAt: string;
+}
+
+export interface PaymentFormValues {
+  paymentCard: {
+    cardHolderName: string;
+    cardNumber: string;
+    expireMonth: string;
+    expireYear: string;
+    cvc: string;
+  };
+  buyer: {
+    id: string;
+    name: string;
+    surname: string;
+    gsmNumber: string;
+    email: string;
+    identityNumber: string;
+    ip: string;
+    lastLoginDate: string;
+    registrationDate: string;
+  };
+  shippingAddress: {
+    contactName: string;
+    city: string;
+    state?: string;
+    country: string;
+    address: string;
+    street?: string;
+    zipCode: string;
+  };
+  billingAddress: {
+    contactName: string;
+    city: string;
+    country: string;
+    address: string;
+    zipCode: string;
+    apartment?: string;
+  };
 }

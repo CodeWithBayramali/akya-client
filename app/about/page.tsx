@@ -15,7 +15,7 @@ export default function page() {
         <Image
           width={400}
           height={400}
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
           className="rounded-xl"
           src={"/images/akyabutik.jpeg"}
           alt="akyabutik.jpeg"

@@ -14,7 +14,6 @@ import { VscCreditCard } from "react-icons/vsc";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ImCreditCard } from "react-icons/im";
 import Image from "next/image";
-import Loading from "@/components/common/Loading";
 import { useOrderValidationSchema } from "@/util/orderSchema";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { Button } from "primereact/button";
@@ -60,28 +59,46 @@ export default function PaymentForm() {
 
   useEffect(() => {
     if (threeDsModal) {
-      const observer = new MutationObserver(() => {
-        const form = document.querySelector("form"); // İlk bulunan formu seç
-        if (form) {
-          observer.disconnect(); // Artık gözlemlemeye gerek yok
-          console.log("Form bulundu, gönderiliyor:", form);
+      console.log("🔄 3D Secure yönlendirme başlatılıyor...");
 
-          setTimeout(() => {
-            form.submit(); // Formu gönder
-          }, 1000); // 1 saniye bekleyerek render’ın tamamlanmasını sağla
-        }
-      });
+      // Gelen HTML içindeki formu geçici bir DOM öğesinde işleyelim
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = String(threeDsModal);
 
-      // 3D Secure formunun ekleneceği container'ı izle
-      const container = document.getElementById("3ds-form-container");
-      if (container) {
-        observer.observe(container, { childList: true, subtree: true });
-      } else {
-        console.error("3D Secure form container bulunamadı!");
+      const form = tempDiv.querySelector("form"); // Formu bul
+      if (!form) {
+        console.error("❌ İyzico formu bulunamadı!");
+        return;
       }
 
-      // Cleanup işlemi
-      return () => observer.disconnect();
+      const actionUrl = form.getAttribute("action"); // Formun yönlendirileceği URL
+      if (!actionUrl) {
+        console.error("❌ Form action URL bulunamadı!");
+        return;
+      }
+
+      console.log("🚀 3D Secure yönlendirme yapılıyor:", actionUrl);
+
+      // Form içindeki inputları alıp bir POST isteği yap
+      const formData = new FormData(form);
+
+      // Tarayıcıyı 3D Secure sayfasına yönlendir
+      const newForm = document.createElement("form");
+      newForm.method = "POST";
+      newForm.action = actionUrl;
+
+      for (const [name, value] of formData.entries()) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        if (typeof value === "string") {
+          input.value = value;
+        }
+        newForm.appendChild(input);
+      }
+
+      document.body.appendChild(newForm);
+      newForm.submit(); // Yönlendirmeyi başlat
     }
   }, [threeDsModal]);
 
@@ -124,15 +141,12 @@ export default function PaymentForm() {
       setSubmitting(false)
       toast.error(data.errorMessage);
     }
-    setLoading(false);
   };
 
   const validationSchema = useOrderValidationSchema(openBillingAddress);
   return (
       <div className="flex flex-col  gap-2 py-3">
-        {loading ? (
-            <Loading />
-        ) : (
+
             <Formik
                 initialValues={{
                   paymentCard: {
@@ -637,18 +651,6 @@ export default function PaymentForm() {
                   </Form>
               )}
             </Formik>
-        )}
-        {/* 3D Form */}
-        {threeDsModal && (
-            <div>
-              <h3>3D Secure Doğrulama</h3>
-              <div
-                  id="3ds-form-container"
-                  dangerouslySetInnerHTML={{ __html: threeDsModal }} // html içeriği burada
-              />
-              {/* Otomatik gönderim için formun doğru şekilde render edilmesini bekle */}
-            </div>
-        )}
       </div>
   );
 }

@@ -60,19 +60,30 @@ export default function PaymentForm() {
 
   useEffect(() => {
     if (threeDsModal) {
-      const form = document.forms["returnform"]; // Formun id'si
-      //const form = document.forms["iyzico-3ds-form"]
-      if (form) {
-        setTimeout(() => {
-          form.submit(); // Formu gönder
-        }, 100); // 100ms gecikme
+      const observer = new MutationObserver(() => {
+        const form = document.querySelector("form"); // İlk bulunan formu seç
+        if (form) {
+          observer.disconnect(); // Artık gözlemlemeye gerek yok
+          console.log("Form bulundu, gönderiliyor:", form);
+
+          setTimeout(() => {
+            form.submit(); // Formu gönder
+          }, 1000); // 1 saniye bekleyerek render’ın tamamlanmasını sağla
+        }
+      });
+
+      // 3D Secure formunun ekleneceği container'ı izle
+      const container = document.getElementById("3ds-form-container");
+      if (container) {
+        observer.observe(container, { childList: true, subtree: true });
       } else {
-        console.error("Form bulunamadı!"); // Hata mesajı
+        console.error("3D Secure form container bulunamadı!");
       }
+
+      // Cleanup işlemi
+      return () => observer.disconnect();
     }
   }, [threeDsModal]);
-
-  console.log(cartProducts);
 
   const _handleSubmit = async (values, {setSubmitting}) => {
     const response = await fetch(
@@ -106,7 +117,7 @@ export default function PaymentForm() {
         }
     );
     const data = await response.json();
-
+    console.log(data);
     if (data.status === "success") {
       setThreeDsModal(data.htmlContent);
     } else {
